@@ -1,9 +1,0 @@
-version: '3'
-
-services:
-  web:
-    build: './nginx/'
-    ports:
-        - "80:80"
-  php:
-    build: './php-fpm/'
