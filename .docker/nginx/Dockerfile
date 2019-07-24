@@ -1,6 +1,6 @@
 FROM nginx:latest
-COPY index.php /code/
-COPY site.conf /etc/nginx/conf.d/site.conf 
+COPY ./code/index.php /code/
+COPY .docker/nginx/site.conf /etc/nginx/conf.d/site.conf 
 
 EXPOSE 80
 

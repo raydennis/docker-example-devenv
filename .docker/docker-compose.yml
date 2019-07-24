@@ -3,11 +3,16 @@ version: '3'
 services:
   web:
     build: 
-        context: .
-        dockerfile: './nginx/Dockerfile'
+        context: ../.
+        dockerfile: '.docker/nginx/Dockerfile'
+    volumes:
+        - ../code:/code
+        - ../.docker/nginx/site.conf:/etc/nginx/conf.d/site.conf
     ports:
         - "80:80"
   php:
     build: 
-        context: .
-        dockerfile: './php-fpm/Dockerfile'
+        context: ../.
+        dockerfile: '.docker/php-fpm/Dockerfile'
+    volumes:
+        - ../code:/code
