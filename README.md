@@ -1,8 +1,6 @@
-# This is not a working setup!!
-
-In order for the php-fpm dockerfile to have access to the index in the project root, you have to specify that context when running docker build.
-```bash
-docker build . -f .docker/php-fpm/Dockerfile  
-```
-
-the first "." is the "context".  This must be run from the root.  This says, give the Dockerfile access to everything from . on (which includes our code).  This seems to be overcomplicating things when you can just keep everything in the root directory and not think about it. 
+REPOSITORY                      TAG                 IMAGE ID            CREATED             SIZE
+docker-php-tutorial_php         latest              19b62a0d2c3a        4 minutes ago       439MB
+docker-php-tutorial_workspace   latest              19b62a0d2c3a        4 minutes ago       439MB
+docker-php-tutorial_web         latest              75187cf45e17        4 minutes ago       164MB
+nginx                           latest              e445ab08b2be        2 days ago          126MB
+php                             7-fpm               be79e268320a        3 days ago          401MB
