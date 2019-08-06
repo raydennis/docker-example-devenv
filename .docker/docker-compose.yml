@@ -1,30 +1,50 @@
 version: '3'
 
+networks:
+  backend:
+    driver: ${NETWORKS_DRIVER}
+
 services:
-  web:
+  nginx:
+    image: docker-example-devenv/nginx
     build: 
-        context: ../.
-        dockerfile: '.docker/nginx/Dockerfile'
+      context: ../.
+      dockerfile: '.docker/nginx/Dockerfile'
     volumes:
-        - ../code:/code
-        - ../.docker/nginx/:/etc/nginx/conf.d/
+      - ../code:/code
+      - ../.docker/nginx/site.conf:/etc/nginx/conf.d/site.conf
     ports:
       - "${NGINX_HOST_HTTP_PORT}:80"
       - "${NGINX_HOST_HTTPS_PORT}:443"
+    networks:
+      backend:
+        aliases:
+          - ${APP_HOST}
 
   php:
+    image: docker-example-devenv/php-fpm
     build: 
-        context: ../.
-        dockerfile: '.docker/php-fpm/Dockerfile'
+      context: ../.
+      dockerfile: '.docker/php-fpm/Dockerfile'
     volumes:
-        - ../code:/code
+      - ../code:/code
+    networks:
+      - backend
 
   workspace:
+    image: docker-example-devenv/workspace
     build:
-        context: ../.
-        dockerfile: '.docker/workspace/Dockerfile'
+      context: ../.
+      dockerfile: '.docker/workspace/Dockerfile'
+      args:
+        - APP_CODE_PATH=${APP_CODE_PATH_CONTAINER}
+        - APP_GROUP=${APP_GROUP}
+        - APP_GROUP_ID=${APP_GROUP_ID}
+        - APP_USER=${APP_USER}
+        - APP_USER_ID=${APP_USER_ID}
+        - TARGET_PHP_VERSION=${PHP_VERSION}
+        - TZ=${TIMEZONE}
     volumes:
         - ../code:/code
-    ports:
-      - "${WORKSPACE_HOST_SSH_PORT}:22"
-
+    networks:
+      - backend

@@ -1,5 +1,5 @@
 <h1>
-Test 2
+Test
 </h1>
 <?php
 echo phpinfo();
